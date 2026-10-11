@@ -3,7 +3,7 @@
   "name": "WiZ",
   "codeowners": ["@sbidy", "@arturpragacz"],
   "config_flow": true,
-  "dependencies": ["network"],
+  "dependencies": ["file_upload", "network"],
   "dhcp": [
     {
       "registered_devices": true

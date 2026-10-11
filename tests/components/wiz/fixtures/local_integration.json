@@ -1,0 +1,77 @@
+{
+  "name": "Home",
+  "home_id": 12345678,
+  "region": "eu",
+  "udp_signing_key": "00112233445566778899aabbccddeeff",
+  "version": "1.0",
+  "creation_date": "2026-07-01T05:02:47+0000",
+  "update_date": "2026-10-03T15:39:36+0000",
+  "rooms": [
+    {
+      "room_id": 23456789,
+      "name": "Bedroom",
+      "type": "BEDROOM",
+      "creation_date": "2026-07-01T05:02:47+0000",
+      "update_date": "2026-10-10T13:09:08+0000"
+    },
+    {
+      "room_id": 23456790,
+      "name": "Garage",
+      "type": "GARAGE",
+      "creation_date": "2026-10-02T14:27:31+0000",
+      "update_date": "2026-10-02T14:27:31+0000"
+    }
+  ],
+  "devices": [
+    {
+      "device_id": 34567890,
+      "type": "light",
+      "room_id": 23456789,
+      "group_id": null,
+      "name": "Bedroom lamp",
+      "mac_address": "abcabcabcabc",
+      "fw_version": "1.38.0",
+      "traits": {
+        "is_dimmable": true,
+        "is_tunable_white": true,
+        "white_range": [2200, 6500],
+        "is_tunable_color": true,
+        "supports_light_mode": true
+      },
+      "creation_date": "2026-07-06T15:11:46+0000",
+      "update_date": "2026-10-07T13:10:08+0000"
+    },
+    {
+      "device_id": 34567891,
+      "type": "light",
+      "room_id": 23456789,
+      "group_id": null,
+      "name": "Desk lamp",
+      "mac_address": "a8bb50000001",
+      "fw_version": "1.38.0",
+      "traits": {
+        "is_dimmable": true,
+        "is_tunable_white": true,
+        "white_range": [2700, 6500],
+        "is_tunable_color": true,
+        "supports_light_mode": true
+      },
+      "creation_date": "2026-10-01T04:49:47+0000",
+      "update_date": "2026-10-10T20:18:41+0000"
+    },
+    {
+      "device_id": 34567892,
+      "type": "plug",
+      "room_id": 23456789,
+      "group_id": null,
+      "name": "Kettle plug",
+      "mac_address": "a8bb50000002",
+      "fw_version": "1.39.0",
+      "traits": {
+        "has_power_meter": true
+      },
+      "creation_date": "2026-10-01T04:49:47+0000",
+      "update_date": "2026-10-10T20:18:41+0000"
+    }
+  ]
+}

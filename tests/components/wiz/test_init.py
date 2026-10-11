@@ -1,9 +1,12 @@
 """Tests for wiz integration."""
 
 import datetime
+from typing import Any
 from unittest.mock import AsyncMock, patch
 
-from homeassistant.components.wiz.const import DOMAIN
+import pytest
+
+from homeassistant.components.wiz.const import CONF_SIGNING_KEY, DOMAIN
 from homeassistant.config_entries import ConfigEntryState
 from homeassistant.const import ATTR_FRIENDLY_NAME, CONF_HOST, EVENT_HOMEASSISTANT_STOP
 from homeassistant.core import HomeAssistant
@@ -13,6 +16,7 @@ from homeassistant.util.dt import utcnow
 from . import (
     FAKE_IP,
     FAKE_MAC,
+    FAKE_SIGNING_KEY,
     FAKE_SOCKET,
     _mocked_wizlight,
     _patch_discovery,
@@ -97,3 +101,34 @@ async def test_reload_on_title_change(hass: HomeAssistant) -> None:
         hass.states.get("switch.mock_title").attributes[ATTR_FRIENDLY_NAME]
         == "Shop Switch"
     )
+
+
+@pytest.mark.parametrize(
+    ("data", "signing_key"),
+    [
+        pytest.param({CONF_HOST: FAKE_IP}, None, id="without_key"),
+        pytest.param(
+            {CONF_HOST: FAKE_IP, CONF_SIGNING_KEY: FAKE_SIGNING_KEY},
+            FAKE_SIGNING_KEY,
+            id="with_key",
+        ),
+    ],
+)
+async def test_setup_uses_signing_key(
+    hass: HomeAssistant, data: dict[str, Any], signing_key: str | None
+) -> None:
+    """Test the device is set up with the signing key of the entry."""
+    entry = MockConfigEntry(domain=DOMAIN, unique_id=FAKE_MAC, data=data)
+    entry.add_to_hass(hass)
+    bulb = _mocked_wizlight(None, None, None)
+    with (
+        _patch_discovery(),
+        patch(
+            "homeassistant.components.wiz.wizlight", return_value=bulb
+        ) as mock_wizlight,
+    ):
+        await async_setup_component(hass, DOMAIN, {DOMAIN: {}})
+        await hass.async_block_till_done()
+
+    assert entry.state is ConfigEntryState.LOADED
+    mock_wizlight.assert_called_once_with(FAKE_IP, signing_key=signing_key)
