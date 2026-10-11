@@ -9,6 +9,7 @@
     'entry': dict({
       'data': dict({
         'host': '1.1.1.1',
+        'signing_key': '**REDACTED**',
       }),
       'title': 'Mock Title',
     }),

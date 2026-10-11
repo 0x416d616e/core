@@ -3,13 +3,19 @@
     "abort": {
       "already_configured": "[%key:common::config_flow::abort::already_configured_device%]",
       "cannot_connect": "[%key:common::config_flow::error::cannot_connect%]",
-      "no_devices_found": "[%key:common::config_flow::abort::no_devices_found%]"
+      "different_device": "The IP address belongs to a different WiZ device.",
+      "local_integration_successful": "{updated} configured devices now use the security key from the file, and {discovered} new devices were found. Add the new devices from the discovered list now; if any device gets set up without the key, import the file again.",
+      "no_devices_found": "[%key:common::config_flow::abort::no_devices_found%]",
+      "reconfigure_successful": "[%key:common::config_flow::abort::reconfigure_successful%]"
     },
     "error": {
       "bulb_time_out": "Cannot connect to the bulb. Maybe the bulb is offline or a wrong IP was entered. Please turn on the light and try again!",
       "cannot_connect": "[%key:common::config_flow::error::cannot_connect%]",
+      "invalid_local_integration_file": "The file is not a valid WiZ local integration export.",
+      "invalid_signing_key": "The security key must be 32 hexadecimal characters.",
       "no_ip": "Not a valid IP address.",
       "no_wiz_light": "The bulb cannot be connected via WiZ integration.",
+      "signing_key_with_remove": "Leave the security key empty when removing it.",
       "unknown": "[%key:common::config_flow::error::unknown%]"
     },
     "flow_title": "{name} ({host})",
@@ -17,16 +23,47 @@
       "discovery_confirm": {
         "description": "Do you want to set up {name} ({host})?"
       },
+      "local_integration": {
+        "data": {
+          "local_integration_file": "Local integration file"
+        },
+        "data_description": {
+          "local_integration_file": "In the WiZ app, open the home settings, select Integrations, then Local integrations, and download the file. The download link is only valid for 15 minutes."
+        },
+        "description": "Adds the home security key to the devices of the exported home, and finds devices that are not set up yet."
+      },
+      "manual": {
+        "data": {
+          "host": "[%key:common::config_flow::data::ip%]",
+          "signing_key": "Security key"
+        },
+        "data_description": {
+          "signing_key": "The home security key from the local integrations export in the WiZ app. Only needed if the home only allows verified controls."
+        },
+        "description": "If you leave the IP address empty, discovery will be used to find devices."
+      },
       "pick_device": {
         "data": {
           "device": "[%key:common::config_flow::data::device%]"
         }
       },
-      "user": {
+      "reconfigure": {
         "data": {
-          "host": "[%key:common::config_flow::data::ip%]"
+          "host": "[%key:common::config_flow::data::ip%]",
+          "remove_signing_key": "Remove the security key",
+          "signing_key": "[%key:component::wiz::config::step::manual::data::signing_key%]"
         },
-        "description": "If you leave the IP address empty, discovery will be used to find devices."
+        "data_description": {
+          "remove_signing_key": "Send commands unsigned. Only works if the home allows all controls in the WiZ app.",
+          "signing_key": "[%key:component::wiz::config::step::manual::data_description::signing_key%]"
+        },
+        "description": "Update the IP address or security key of {name}. Leave the security key empty to keep the current one."
+      },
+      "user": {
+        "menu_options": {
+          "local_integration": "Import the local integration file from the WiZ app",
+          "manual": "Search the network or enter an IP address"
+        }
       }
     }
   },

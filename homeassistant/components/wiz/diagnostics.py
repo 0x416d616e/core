@@ -5,9 +5,11 @@ from typing import Any
 from homeassistant.components.diagnostics import async_redact_data
 from homeassistant.core import HomeAssistant
 
+from .const import CONF_SIGNING_KEY
 from .coordinator import WizConfigEntry
 
 TO_REDACT = {"roomId", "homeId"}
+TO_REDACT_ENTRY = {CONF_SIGNING_KEY}
 
 
 async def async_get_config_entry_diagnostics(
@@ -17,7 +19,7 @@ async def async_get_config_entry_diagnostics(
     return {
         "entry": {
             "title": entry.title,
-            "data": dict(entry.data),
+            "data": async_redact_data(entry.data, TO_REDACT_ENTRY),
         },
         "data": async_redact_data(entry.runtime_data.bulb.diagnostics, TO_REDACT),
     }
